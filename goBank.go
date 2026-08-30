@@ -1,9 +1,40 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+	"strconv"
+)
+
+const accountBalanceFile = "Balance.txt"
+
+func writeBalanceToFile(balance float64) {
+	balanceTxt := fmt.Sprint(balance)
+	os.WriteFile(accountBalanceFile, []byte(balanceTxt), 0644)
+}
+
+func getBalanceFromFile() (float64, error) {
+	data, err := os.ReadFile(accountBalanceFile)
+	if err != nil {
+		fmt.Println(err)
+		fmt.Println("init new account balance...")
+		return 0.0, err
+	}
+	balanceTxt := string(data)
+	balance, err := strconv.ParseFloat(balanceTxt, 64)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return 0.0, err
+	}
+	return balance, nil
+}
 
 func main() {
-	var accountBalance float64 = 200
+	var accountBalance, err = getBalanceFromFile()
+	if err != nil {
+		fmt.Println("Failed to get account balance:", err)
+		return
+	}
 	var depositAmount float64
 	var withdrawAmount float64
 	var option int
@@ -32,6 +63,7 @@ func main() {
 			fmt.Println("Deposited Funds: ", depositAmount)
 			accountBalance += depositAmount
 			fmt.Println("Account Balance ", accountBalance)
+			writeBalanceToFile(accountBalance)
 		} else if option == 3 {
 			fmt.Print("Please Enter the Withdraw amount: ")
 			fmt.Scan(&withdrawAmount)
@@ -46,6 +78,7 @@ func main() {
 			fmt.Println("Withdraw Funds: ", withdrawAmount)
 			accountBalance -= withdrawAmount
 			fmt.Println("Account Balance ", accountBalance)
+			writeBalanceToFile(accountBalance)
 		} else if option == 4 {
 			isOpen = false
 			fmt.Println("Exited")
