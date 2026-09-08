@@ -49,7 +49,12 @@ func main() {
 		fmt.Println("4. Exit")
 
 		fmt.Print("Input Option: ")
-		fmt.Scan(&option)
+		_, err := fmt.Scan(&option)
+		if err != nil {
+			fmt.Println("Error:", err)
+			continue
+		}
+
 		fmt.Println("Option Selected:", option)
 		if option == 1 {
 			fmt.Println("Account Balance: ", accountBalance)
@@ -81,7 +86,7 @@ func main() {
 			writeBalanceToFile(accountBalance)
 		} else if option == 4 {
 			isOpen = false
-			fmt.Println("Exited")
+			fmt.Println("---Exited, Bye!---")
 		} else {
 			fmt.Println("---Invalid Option!---")
 		}
