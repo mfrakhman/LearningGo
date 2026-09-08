@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-const accountBalanceFile = "Balance.txt"
+const accountBalanceFile = "secondLecture/Balance.txt"
 
 func writeBalanceToFile(balance float64) {
 	balanceTxt := fmt.Sprint(balance)
@@ -41,12 +41,7 @@ func main() {
 	var isOpen bool = true
 
 	for isOpen {
-		fmt.Println("=====Hello Bank=====")
-		fmt.Println("Please Select Command Option:")
-		fmt.Println("1. Check Account Balance")
-		fmt.Println("2. Deposit Funds")
-		fmt.Println("3. Withdraw Funds")
-		fmt.Println("4. Exit")
+		presentOption()
 
 		fmt.Print("Input Option: ")
 		_, err := fmt.Scan(&option)
