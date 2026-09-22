@@ -1,9 +1,14 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/Pallinder/go-randomdata"
+)
 
 func presentOption() {
 	fmt.Println("=====Hello Bank=====")
+	fmt.Println("Reach us 24/7", randomdata.PhoneNumber())
 	fmt.Println("Please Select Command Option:")
 	fmt.Println("1. Check Account Balance")
 	fmt.Println("2. Deposit Funds")
